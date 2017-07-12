@@ -80,7 +80,7 @@ gpii.nexus.recipeMatcher.componentMatchesReactantSpec = function (component, mat
 //       - Randomly assigned by the Co-Occurrence Engine
 
 fluid.defaults("gpii.nexus.coOccurrenceEngine", {
-    gradeNames: "fluid.modelComponent",
+    gradeNames: ["fluid.component", "fluid.resolveRoot"], // TODO: Can I get rid of resolveRoot here?
     members: {
         // TODO: Is "members" the best place for this map?
 
@@ -147,6 +147,7 @@ fluid.defaults("gpii.nexus.coOccurrenceEngine", {
             namespace: "coOccurrenceEngine"
         },
         {
+            // TODO: Distributing to / will result in a lot of events being fired -- any other option?
             target: "{/ fluid.component}.options.listeners",
             record: {
                 "afterDestroy.fireNexusComponentDestroyed":

@@ -16,3 +16,4 @@ var fluid = require("infusion");
 
 fluid.module.register("gpii-co-occurrence-engine", __dirname, require);
 require("./src/CoOccurrenceEngine.js");
+require("./src/NexusWithCoOccurrenceEngine.js");

@@ -17,7 +17,8 @@ var fluid = require("infusion");
 var tests = [
     "./CoOccurrenceEngineTests.js",
     "./NexusWithCoOccurrenceEngineTests.js",
-    "./RecipeMatcherTests.js"
+    "./RecipeMatcherTests.js",
+    "./RecipeProductWiringTests.js"
 ];
 
 fluid.each(tests, function (path) {

@@ -11,7 +11,8 @@ https://raw.githubusercontent.com/GPII/nexus/master/LICENSE.txt
 /* eslint-env node */
 
 
-// TODO: Move the logic of this test to CoOccurrenceEngineTests
+// TODO: When we can support multiple recipe product instances, move the
+// logic of this test to CoOccurrenceEngineTests
 
 
 "use strict";

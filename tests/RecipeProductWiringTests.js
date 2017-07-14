@@ -17,13 +17,23 @@ https://raw.githubusercontent.com/GPII/nexus/master/LICENSE.txt
 
 "use strict";
 
-var fluid = require("infusion");
+var fluid = require("infusion"),
+    gpii = fluid.registerNamespace("gpii");
 
 fluid.require("node-jqunit");
 
 require("../index.js");
-fluid.require("%gpii-nexus/src/test/NexusTestUtils.js"); // TODO: Is this reasonable?
 require("../src/test/RecipeTestData.js");
+
+fluid.registerNamespace("gpii.test.nexus");
+
+gpii.test.nexus.changeModelAtPath = function (componentPath, modelPath, value) {
+    fluid.componentForPath(componentPath).applier.change(modelPath, value);
+};
+
+gpii.test.nexus.changeEventForComponent = function (path) {
+    return fluid.componentForPath(path).applier.modelChanged;
+};
 
 // Tests
 

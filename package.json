@@ -8,7 +8,7 @@
         "test": "node tests/all-tests.js"
     },
     "dependencies": {
-        "gpii-nexus": "simonbates/nexus#GPII-2415",
+        "gpii-nexus": "simonbates/nexus#GPII-2488",
         "infusion": "2.0.0",
         "kettle": "1.1.1"
     },

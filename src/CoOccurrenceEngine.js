@@ -91,7 +91,7 @@ fluid.defaults("gpii.nexus.coOccurrenceEngine", {
         reactantRecipeMembership: {}
     },
     components: {
-        nexusComponentRoot: {
+        componentRoot: {
             type: "fluid.component",
             options: {
                 components: {
@@ -101,7 +101,7 @@ fluid.defaults("gpii.nexus.coOccurrenceEngine", {
                 }
             }
         },
-        recipesContainer: "{gpii.nexus.coOccurrenceEngine}.nexusComponentRoot.recipes",
+        recipesContainer: "{gpii.nexus.coOccurrenceEngine}.componentRoot.recipes",
         recipeMatcher: {
             type: "gpii.nexus.recipeMatcher"
         }
@@ -121,7 +121,7 @@ fluid.defaults("gpii.nexus.coOccurrenceEngine", {
         onComponentCreated: {
             funcName: "gpii.nexus.coOccurrenceEngine.componentCreated",
             args: [
-                "{that}.nexusComponentRoot",
+                "{that}.componentRoot",
                 "{that}.recipeMatcher",
                 "@expand:{that}.getRecipes()",
                 "{that}.reactantRecipeMembership",
@@ -131,7 +131,7 @@ fluid.defaults("gpii.nexus.coOccurrenceEngine", {
         onComponentDestroyed: {
             funcName: "gpii.nexus.coOccurrenceEngine.componentDestroyed",
             args: [
-                "{that}.nexusComponentRoot",
+                "{that}.componentRoot",
                 "{that}.reactantRecipeMembership",
                 "{arguments}.0.id" // Id of component destroyed
             ]
@@ -139,7 +139,7 @@ fluid.defaults("gpii.nexus.coOccurrenceEngine", {
     },
     distributeOptions: [
         {
-            target: "{nexusComponentRoot fluid.component}.options.listeners",
+            target: "{componentRoot fluid.component}.options.listeners",
             record: {
                 "onCreate.fireNexusComponentCreated":
                     "{gpii.nexus.coOccurrenceEngine}.events.onComponentCreated"

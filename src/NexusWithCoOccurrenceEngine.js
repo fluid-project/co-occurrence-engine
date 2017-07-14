@@ -33,7 +33,7 @@ fluid.defaults("gpii.nexus.nexusWithCoOccurrenceEngine", {
             type: "gpii.nexus.coOccurrenceEngine",
             options: {
                 components: {
-                    nexusComponentRoot: "{nexusWithCoOccurrenceEngine}.nexusComponentRoot"
+                    componentRoot: "{nexusWithCoOccurrenceEngine}.nexusComponentRoot"
                 }
             }
         }

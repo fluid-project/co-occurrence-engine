@@ -70,8 +70,8 @@ reactant with its component path. The product may then use these component
 paths, for example via expander calls to `fluid.componentForPath`, to reference
 the reactant components.
 
-Sample Recipe and Product grade
--------------------------------
+Sample Recipe and Product grades
+--------------------------------
 
 Recipe:
 

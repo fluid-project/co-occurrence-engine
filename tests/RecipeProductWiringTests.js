@@ -23,7 +23,7 @@ var fluid = require("infusion"),
 fluid.require("node-jqunit");
 
 require("../index.js");
-require("../src/test/RecipeTestData.js");
+require("../src/test/RecipeTestGrades.js");
 
 fluid.registerNamespace("gpii.test.nexus");
 
@@ -105,9 +105,9 @@ fluid.defaults("gpii.tests.nexus.recipeProductTester", {
                     {
                         func: "fluid.construct",
                         args: [
-                            "nexusRecipeProductTests.recipeA1",
+                            "nexusRecipeProductTests.recipeX1",
                             {
-                                type: "gpii.test.nexus.recipeA.product",
+                                type: "gpii.test.nexus.recipeX.product",
                                 componentPaths: {
                                     componentA: "nexusRecipeProductTests.componentA1",
                                     componentB: "nexusRecipeProductTests.componentB1"
@@ -117,9 +117,9 @@ fluid.defaults("gpii.tests.nexus.recipeProductTester", {
                     }, {
                         func: "fluid.construct",
                         args: [
-                            "nexusRecipeProductTests.recipeA2",
+                            "nexusRecipeProductTests.recipeX2",
                             {
-                                type: "gpii.test.nexus.recipeA.product",
+                                type: "gpii.test.nexus.recipeX.product",
                                 componentPaths: {
                                     componentA: "nexusRecipeProductTests.componentA2",
                                     componentB: "nexusRecipeProductTests.componentB2"

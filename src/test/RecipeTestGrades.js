@@ -12,30 +12,23 @@ https://raw.githubusercontent.com/GPII/co-occurrence-engine/master/LICENSE.txt
 
 "use strict";
 
-var fluid = require("infusion"),
-    gpii = fluid.registerNamespace("gpii");
+var fluid = require("infusion");
 
-fluid.registerNamespace("gpii.test.nexus");
-
-gpii.test.nexus.reactantAOptions = {
+fluid.defaults("gpii.test.nexus.reactantA", {
     gradeNames: ["fluid.modelComponent"],
     model: {
         valueA: 10
     }
-};
+});
 
-fluid.defaults("gpii.test.nexus.reactantA", gpii.test.nexus.reactantAOptions);
-
-gpii.test.nexus.reactantBOptions = {
+fluid.defaults("gpii.test.nexus.reactantB", {
     gradeNames: ["fluid.modelComponent"],
     model: {
         valueB: 20
     }
-};
+});
 
-fluid.defaults("gpii.test.nexus.reactantB", gpii.test.nexus.reactantBOptions);
-
-gpii.test.nexus.recipeAProductOptions = {
+fluid.defaults("gpii.test.nexus.recipeX.product", {
     gradeNames: ["gpii.nexus.recipeProduct"],
     componentPaths: {
         componentA: null,
@@ -58,6 +51,28 @@ gpii.test.nexus.recipeAProductOptions = {
             }
         }
     ]
-};
+});
 
-fluid.defaults("gpii.test.nexus.recipeA.product", gpii.test.nexus.recipeAProductOptions);
+fluid.defaults("gpii.test.nexus.recipeX", {
+    gradeNames: ["gpii.nexus.recipe"],
+    reactants: {
+        componentA: {
+            match: {
+                type: "gradeMatcher",
+                gradeName: "gpii.test.nexus.reactantA"
+            }
+        },
+        componentB: {
+            match: {
+                type: "gradeMatcher",
+                gradeName: "gpii.test.nexus.reactantB"
+            }
+        }
+    },
+    product: {
+        path: "recipeXProduct",
+        options: {
+            type: "gpii.test.nexus.recipeX.product"
+        }
+    }
+});

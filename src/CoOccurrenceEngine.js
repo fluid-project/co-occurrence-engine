@@ -172,10 +172,8 @@ gpii.nexus.coOccurrenceEngine.getRecipes = function (recipesContainer) {
 gpii.nexus.coOccurrenceEngine.componentCreated = function (componentRoot, recipeMatcher, recipes, reactantRecipeMembership, productCreatedEvent) {
     var components = [];
 
-    // TODO: This will only collect direct children of componentRoot, we
-    // want all descendants
-    // TODO: Maybe better to pass the componentRoot directly to the
-    // recipeMatcher and let it do the walking
+    // TODO: This will only collect direct children of componentRoot, do we want all descendants?
+    // TODO: Maybe better to pass the componentRoot directly to the recipeMatcher and let it do the walking
     fluid.each(componentRoot, function (component) {
         if (fluid.isComponent(component)) {
             components.push(component);

@@ -17,38 +17,13 @@ var fluid = require("infusion"),
     gpii = fluid.registerNamespace("gpii");
 
 require("../index.js");
-fluid.require("%gpii-nexus/src/test/NexusTestUtils.js"); // TODO: Is this reasonable?
-require("../src/test/RecipeTestData.js");
+// TODO: Is using NexusTestUtils.js reasonable?
+fluid.require("%gpii-nexus/src/test/NexusTestUtils.js");
+require("../src/test/RecipeTestGrades.js");
 
 kettle.loadTestingSupport();
 
 fluid.registerNamespace("gpii.tests.nexus.nexusWithCoOccurrenceEngine");
-
-// Recipe
-
-gpii.tests.nexus.nexusWithCoOccurrenceEngine.recipeA = {
-    type: "gpii.nexus.recipe",
-    reactants: {
-        componentA: {
-            match: {
-                type: "gradeMatcher",
-                gradeName: "gpii.test.nexus.reactantA"
-            }
-        },
-        componentB: {
-            match: {
-                type: "gradeMatcher",
-                gradeName: "gpii.test.nexus.reactantB"
-            }
-        }
-    },
-    product: {
-        path: "recipeAProduct",
-        options: {
-            type: "gpii.test.nexus.recipeA.product"
-        }
-    }
-};
 
 // Tests
 
@@ -59,47 +34,18 @@ gpii.tests.nexus.nexusWithCoOccurrenceEngine.testDefs = [
         mergePolicy: {
             "testGradeOptions": "noexpand"
         },
-        expect: 9,
+        expect: 6,
         config: {
             configName: "gpii.tests.nexusWithCoOccurrenceEngine.config",
             configPath: "%gpii-co-occurrence-engine/tests/configs"
-        },
-        testGradeOptions: {
-            reactantAOptions: gpii.test.nexus.reactantAOptions,
-            reactantBOptions: gpii.test.nexus.reactantBOptions,
-            recipeAProductOptions: gpii.test.nexus.recipeAProductOptions
         },
         components: {
             addRecipeRequest: {
                 type: "kettle.test.request.http",
                 options: {
-                    path: "/components/recipes.recipeA",
+                    path: "/components/recipes.recipeX",
                     port: "{configuration}.options.serverPort",
                     method: "POST"
-                }
-            },
-            writeReactantADefaultsRequest: {
-                type: "kettle.test.request.http",
-                options: {
-                    path: "/defaults/gpii.test.nexus.reactantA",
-                    port: "{configuration}.options.serverPort",
-                    method: "PUT"
-                }
-            },
-            writeReactantBDefaultsRequest: {
-                type: "kettle.test.request.http",
-                options: {
-                    path: "/defaults/gpii.test.nexus.reactantB",
-                    port: "{configuration}.options.serverPort",
-                    method: "PUT"
-                }
-            },
-            writeRecipeAProductDefaultsRequest: {
-                type: "kettle.test.request.http",
-                options: {
-                    path: "/defaults/gpii.test.nexus.recipeA.product",
-                    port: "{configuration}.options.serverPort",
-                    method: "PUT"
                 }
             },
             constructReactantARequest: {
@@ -137,40 +83,12 @@ gpii.tests.nexus.nexusWithCoOccurrenceEngine.testDefs = [
             // Add our recipe
             {
                 func: "{addRecipeRequest}.send",
-                args: [gpii.tests.nexus.nexusWithCoOccurrenceEngine.recipeA]
+                args: [{ type: "gpii.test.nexus.recipeX" }]
             },
             {
                 event: "{addRecipeRequest}.events.onComplete",
                 listener: "gpii.test.nexus.assertStatusCode",
                 args: ["{addRecipeRequest}", 200]
-            },
-            // Write defaults for the reactants and product
-            {
-                func: "{writeReactantADefaultsRequest}.send",
-                args: ["{that}.options.testGradeOptions.reactantAOptions"]
-            },
-            {
-                event: "{writeReactantADefaultsRequest}.events.onComplete",
-                listener: "gpii.test.nexus.assertStatusCode",
-                args: ["{writeReactantADefaultsRequest}", 200]
-            },
-            {
-                func: "{writeReactantBDefaultsRequest}.send",
-                args: ["{that}.options.testGradeOptions.reactantBOptions"]
-            },
-            {
-                event: "{writeReactantBDefaultsRequest}.events.onComplete",
-                listener: "gpii.test.nexus.assertStatusCode",
-                args: ["{writeReactantBDefaultsRequest}", 200]
-            },
-            {
-                func: "{writeRecipeAProductDefaultsRequest}.send",
-                args: ["{that}.options.testGradeOptions.recipeAProductOptions"]
-            },
-            {
-                event: "{writeRecipeAProductDefaultsRequest}.events.onComplete",
-                listener: "gpii.test.nexus.assertStatusCode",
-                args: ["{writeRecipeAProductDefaultsRequest}", 200]
             },
             // Construct the reactants and verify that the product is
             // created
@@ -192,7 +110,7 @@ gpii.tests.nexus.nexusWithCoOccurrenceEngine.testDefs = [
                 listener: "jqUnit.assertValue",
                 args: [
                     "Recipe A product created",
-                    "{nexusComponentRoot}.recipeAProduct"
+                    "{nexusComponentRoot}.recipeXProduct"
                 ]
             },
             {

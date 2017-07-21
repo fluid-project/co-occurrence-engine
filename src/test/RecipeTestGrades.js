@@ -76,3 +76,31 @@ fluid.defaults("gpii.test.nexus.recipeX", {
         }
     }
 });
+
+fluid.defaults("gpii.test.nexus.recipeY.product", {
+    gradeNames: ["gpii.nexus.recipeProduct"],
+    componentPaths: {
+        componentA: null
+    },
+    components: {
+        componentA: "@expand:fluid.componentForPath({recipeProduct}.options.componentPaths.componentA)"
+    }
+});
+
+fluid.defaults("gpii.test.nexus.recipeY", {
+    gradeNames: ["gpii.nexus.recipe"],
+    reactants: {
+        componentA: {
+            match: {
+                type: "gradeMatcher",
+                gradeName: "gpii.test.nexus.reactantA"
+            }
+        }
+    },
+    product: {
+        path: "recipeYProduct",
+        options: {
+            type: "gpii.test.nexus.recipeY.product"
+        }
+    }
+});

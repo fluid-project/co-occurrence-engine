@@ -109,7 +109,7 @@ gpii.tests.nexus.nexusWithCoOccurrenceEngine.testDefs = [
                 event: "{gpii.nexus.coOccurrenceEngine}.events.onProductCreated",
                 listener: "jqUnit.assertValue",
                 args: [
-                    "Recipe A product created",
+                    "Recipe X product created",
                     "{nexusComponentRoot}.recipeXProduct"
                 ]
             },

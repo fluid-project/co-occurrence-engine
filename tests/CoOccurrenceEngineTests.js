@@ -39,7 +39,7 @@ fluid.defaults("gpii.tests.nexus.coOccurrenceEngine.componentRoot", {
 
 // Tests
 
-fluid.defaults("gpii.tests.nexus.coOccurrenceEngineTests", {
+fluid.defaults("gpii.tests.nexus.coOccurrenceEngineTestEnvironment", {
     gradeNames: ["fluid.test.testEnvironment"],
     components: {
         componentRoot: {
@@ -49,20 +49,26 @@ fluid.defaults("gpii.tests.nexus.coOccurrenceEngineTests", {
             type: "gpii.nexus.coOccurrenceEngine",
             options: {
                 components: {
-                    componentRoot: "{coOccurrenceEngineTests}.componentRoot"
+                    componentRoot: "{coOccurrenceEngineTestEnvironment}.componentRoot"
                 }
             }
-        },
-        coOccurrenceEngineTester: {
-            type: "gpii.tests.nexus.coOccurrenceEngineTester"
         }
     }
 });
 
-fluid.defaults("gpii.tests.nexus.coOccurrenceEngineTester", {
+fluid.defaults("gpii.tests.nexus.coOccurrenceEngineConstructionTests", {
+    gradeNames: ["gpii.tests.nexus.coOccurrenceEngineTestEnvironment"],
+    components: {
+        coOccurrenceEngineConstructionTester: {
+            type: "gpii.tests.nexus.coOccurrenceEngineConstructionTester"
+        }
+    }
+});
+
+fluid.defaults("gpii.tests.nexus.coOccurrenceEngineConstructionTester", {
     gradeNames: ["fluid.test.testCaseHolder"],
     modules: [ {
-        name: "Nexus Co-Occurrence Engine tests",
+        name: "Nexus Co-Occurrence Engine construction tests",
         tests: [
             {
                 name: "Construct reactants and verify product created",
@@ -78,7 +84,7 @@ fluid.defaults("gpii.tests.nexus.coOccurrenceEngineTester", {
                         ]
                     },
                     // Add reactant A and reactant B and verify that the
-                    // product for recipe A is created
+                    // product for recipe X is created
                     {
                         func: "gpii.nexus.constructInContainer",
                         args: [
@@ -103,7 +109,7 @@ fluid.defaults("gpii.tests.nexus.coOccurrenceEngineTester", {
                         event: "{coOccurrenceEngine}.events.onProductCreated",
                         listener: "jqUnit.assertValue",
                         args: [
-                            "Recipe A product created",
+                            "Recipe X product created",
                             "{componentRoot}.recipeXProduct"
                         ]
                     },
@@ -164,7 +170,7 @@ fluid.defaults("gpii.tests.nexus.coOccurrenceEngineTester", {
                         event: "{coOccurrenceEngine}.events.onProductCreated",
                         listener: "jqUnit.assertValue",
                         args: [
-                            "Recipe A product created",
+                            "Recipe X product created",
                             "{componentRoot}.recipeXProduct"
                         ]
                     },
@@ -182,14 +188,102 @@ fluid.defaults("gpii.tests.nexus.coOccurrenceEngineTester", {
                             "{arguments}.0"
                         ]
                     }
-
-                    // TODO: Test reactant as member of multiple
-                    // products (including destroying the reactant)
-
                 ]
             }
         ]
     } ]
 });
 
-fluid.test.runTests([ "gpii.tests.nexus.coOccurrenceEngineTests" ]);
+fluid.defaults("gpii.tests.nexus.coOccurrenceEngineReactantInMultipleProductsTests", {
+    gradeNames: ["gpii.tests.nexus.coOccurrenceEngineTestEnvironment"],
+    components: {
+        coOccurrenceEngineReactantInMultipleProductsTester: {
+            type: "gpii.tests.nexus.coOccurrenceEngineReactantInMultipleProductsTester"
+        }
+    }
+});
+
+fluid.defaults("gpii.tests.nexus.coOccurrenceEngineReactantInMultipleProductsTester", {
+    gradeNames: ["fluid.test.testCaseHolder"],
+    modules: [ {
+        name: "Nexus Co-Occurrence Engine reactant in multiple products tests",
+        tests: [
+            {
+                name: "Reactant as member of multiple products",
+                expect: 4,
+                sequence: [
+                    // Check that no recipe products exist
+                    {
+                        func: "jqUnit.assertNoValue",
+                        args: [
+                            "No product X existing",
+                            "{componentRoot}.recipeXProduct"
+                        ]
+                    },
+                    {
+                        func: "jqUnit.assertNoValue",
+                        args: [
+                            "No product Y existing",
+                            "{componentRoot}.recipeYProduct"
+                        ]
+                    },
+                    // Add reactant A and reactant B and verify that the
+                    // product X is created
+                    {
+                        func: "gpii.nexus.constructInContainer",
+                        args: [
+                            "{componentRoot}",
+                            "reactantA",
+                            {
+                                type: "gpii.test.nexus.reactantA"
+                            }
+                        ]
+                    },
+                    {
+                        func: "gpii.nexus.constructInContainer",
+                        args: [
+                            "{componentRoot}",
+                            "reactantB",
+                            {
+                                type: "gpii.test.nexus.reactantB"
+                            }
+                        ]
+                    },
+                    {
+                        event: "{coOccurrenceEngine}.events.onProductCreated",
+                        listener: "jqUnit.assertValue",
+                        args: [
+                            "Recipe X product created",
+                            "{componentRoot}.recipeXProduct"
+                        ]
+                    },
+                    // Add recipeY and verify that product Y is created
+                    {
+                        func: "gpii.nexus.constructInContainer",
+                        args: [
+                            "{componentRoot}",
+                            "recipes.recipeY",
+                            {
+                                type: "gpii.test.nexus.recipeY"
+                            }
+                        ]
+                    },
+                    {
+                        event: "{coOccurrenceEngine}.events.onProductCreated",
+                        listener: "jqUnit.assertValue",
+                        args: [
+                            "Recipe Y product created",
+                            "{componentRoot}.recipeYProduct"
+                        ]
+                    }
+                    // TODO: Destroy reactant A
+                ]
+            }
+        ]
+    } ]
+});
+
+fluid.test.runTests([
+    "gpii.tests.nexus.coOccurrenceEngineConstructionTests",
+    "gpii.tests.nexus.coOccurrenceEngineReactantInMultipleProductsTests"
+]);

@@ -20,6 +20,7 @@ require("../index.js");
 // TODO: Is using NexusTestUtils.js reasonable?
 fluid.require("%gpii-nexus/src/test/NexusTestUtils.js");
 require("../src/test/RecipeTestGrades.js");
+require("../src/test/TestUtils.js");
 
 kettle.loadTestingSupport();
 
@@ -30,7 +31,7 @@ fluid.registerNamespace("gpii.tests.nexus.nexusWithCoOccurrenceEngine");
 gpii.tests.nexus.nexusWithCoOccurrenceEngine.testDefs = [
     {
         name: "Add Recipe, construct reactants, and verify product created",
-        gradeNames: "gpii.test.nexus.testCaseHolder",
+        gradeNames: "kettle.test.testCaseHolder",
         mergePolicy: {
             "testGradeOptions": "noexpand"
         },
@@ -106,7 +107,7 @@ gpii.tests.nexus.nexusWithCoOccurrenceEngine.testDefs = [
                 args: [{ type: "gpii.test.nexus.reactantB" }]
             },
             {
-                event: "{gpii.nexus.coOccurrenceEngine}.events.onProductCreated",
+                event: "{gpii.nexus.coOccurrenceEngine}.events.onRecipeXProductCreated",
                 listener: "jqUnit.assertValue",
                 args: [
                     "Recipe X product created",

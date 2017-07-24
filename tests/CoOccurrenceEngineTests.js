@@ -18,6 +18,7 @@ fluid.require("node-jqunit");
 
 require("../index.js");
 require("../src/test/RecipeTestGrades.js");
+require("../src/test/TestUtils.js");
 
 // Component Root with Recipe
 
@@ -37,7 +38,7 @@ fluid.defaults("gpii.tests.nexus.coOccurrenceEngine.componentRoot", {
     }
 });
 
-// Tests
+// Base testEnvironment
 
 fluid.defaults("gpii.tests.nexus.coOccurrenceEngineTestEnvironment", {
     gradeNames: ["fluid.test.testEnvironment"],
@@ -50,11 +51,36 @@ fluid.defaults("gpii.tests.nexus.coOccurrenceEngineTestEnvironment", {
             options: {
                 components: {
                     componentRoot: "{coOccurrenceEngineTestEnvironment}.componentRoot"
+                },
+                listeners: {
+                    onComponentCreated: {
+                        funcName: "gpii.tests.nexus.coOccurrenceEngine.fireComponentGradeCreated",
+                        args: [
+                            "{arguments}.0",
+                            {
+                                "gpii.test.nexus.recipeX.product": "{coOccurrenceEngineTestEnvironment}.events.onRecipeXProductCreated",
+                                "gpii.test.nexus.recipeY.product": "{coOccurrenceEngineTestEnvironment}.events.onRecipeYProductCreated"
+                            }
+                        ]
+                    }
                 }
             }
         }
+    },
+    events: {
+        onRecipeXProductCreated: null,
+        onRecipeYProductCreated: null,
+        onRecipeXAndYProductCreated: {
+            events: {
+                eventX: "{coOccurrenceEngineTestEnvironment}.events.onRecipeXProductCreated",
+                eventY: "{coOccurrenceEngineTestEnvironment}.events.onRecipeYProductCreated"
+            },
+            args: ["{arguments}.eventX.0", "{arguments}.eventY.0"]
+        }
     }
 });
+
+// Tests
 
 fluid.defaults("gpii.tests.nexus.coOccurrenceEngineConstructionTests", {
     gradeNames: ["gpii.tests.nexus.coOccurrenceEngineTestEnvironment"],
@@ -106,7 +132,7 @@ fluid.defaults("gpii.tests.nexus.coOccurrenceEngineConstructionTester", {
                         ]
                     },
                     {
-                        event: "{coOccurrenceEngine}.events.onProductCreated",
+                        event: "{coOccurrenceEngineTestEnvironment}.events.onRecipeXProductCreated",
                         listener: "jqUnit.assertValue",
                         args: [
                             "Recipe X product created",
@@ -167,7 +193,7 @@ fluid.defaults("gpii.tests.nexus.coOccurrenceEngineConstructionTester", {
                         ]
                     },
                     {
-                        event: "{coOccurrenceEngine}.events.onProductCreated",
+                        event: "{coOccurrenceEngineTestEnvironment}.events.onRecipeXProductCreated",
                         listener: "jqUnit.assertValue",
                         args: [
                             "Recipe X product created",
@@ -227,18 +253,19 @@ fluid.defaults("gpii.tests.nexus.coOccurrenceEngineReactantInMultipleProductsTes
                             "{componentRoot}.recipeYProduct"
                         ]
                     },
-                    // Add reactant A and reactant B and verify that the
-                    // product X is created
+                    // Add recipeY
                     {
                         func: "gpii.nexus.constructInContainer",
                         args: [
                             "{componentRoot}",
-                            "reactantA",
+                            "recipes.recipeY",
                             {
-                                type: "gpii.test.nexus.reactantA"
+                                type: "gpii.test.nexus.recipeY"
                             }
                         ]
                     },
+                    // Add reactant A and reactant B and verify that the
+                    // products for recipes X and Y are both created
                     {
                         func: "gpii.nexus.constructInContainer",
                         args: [
@@ -250,27 +277,25 @@ fluid.defaults("gpii.tests.nexus.coOccurrenceEngineReactantInMultipleProductsTes
                         ]
                     },
                     {
-                        event: "{coOccurrenceEngine}.events.onProductCreated",
+                        func: "gpii.nexus.constructInContainer",
+                        args: [
+                            "{componentRoot}",
+                            "reactantA",
+                            {
+                                type: "gpii.test.nexus.reactantA"
+                            }
+                        ]
+                    },
+                    {
+                        event: "{coOccurrenceEngineTestEnvironment}.events.onRecipeXAndYProductCreated",
                         listener: "jqUnit.assertValue",
                         args: [
                             "Recipe X product created",
                             "{componentRoot}.recipeXProduct"
                         ]
                     },
-                    // Add recipeY and verify that product Y is created
                     {
-                        func: "gpii.nexus.constructInContainer",
-                        args: [
-                            "{componentRoot}",
-                            "recipes.recipeY",
-                            {
-                                type: "gpii.test.nexus.recipeY"
-                            }
-                        ]
-                    },
-                    {
-                        event: "{coOccurrenceEngine}.events.onProductCreated",
-                        listener: "jqUnit.assertValue",
+                        func: "jqUnit.assertValue",
                         args: [
                             "Recipe Y product created",
                             "{componentRoot}.recipeYProduct"
@@ -282,6 +307,8 @@ fluid.defaults("gpii.tests.nexus.coOccurrenceEngineReactantInMultipleProductsTes
         ]
     } ]
 });
+
+// TODO: Test making a product at add recipe
 
 fluid.test.runTests([
     "gpii.tests.nexus.coOccurrenceEngineConstructionTests",

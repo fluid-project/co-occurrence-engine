@@ -19,6 +19,26 @@
                                             "gpii.tests.nexus.componentRoot",
                                             "fluid.resolveRoot"
                                         ]
+                                    },
+                                    {
+                                        "target": "{that coOccurrenceEngine}.options.events",
+                                        "record": {
+                                            "onRecipeXProductCreated": null
+                                        }
+                                    },
+                                    {
+                                        "target": "{that coOccurrenceEngine}.options.listeners",
+                                        "record": {
+                                            "onComponentCreated": {
+                                                "funcName": "gpii.tests.nexus.coOccurrenceEngine.fireComponentGradeCreated",
+                                                "args": [
+                                                    "{arguments}.0",
+                                                    {
+                                                        "gpii.test.nexus.recipeX.product": "{coOccurrenceEngine}.events.onRecipeXProductCreated"
+                                                    }
+                                                ]
+                                            }
+                                        }
                                     }
                                 ]
                             }

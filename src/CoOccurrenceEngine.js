@@ -114,8 +114,7 @@ fluid.defaults("gpii.nexus.coOccurrenceEngine", {
     },
     events: {
         onComponentCreated: null,
-        onComponentDestroyed: null,
-        onProductCreated: null
+        onComponentDestroyed: null
     },
     listeners: {
         onComponentCreated: {
@@ -124,8 +123,7 @@ fluid.defaults("gpii.nexus.coOccurrenceEngine", {
                 "{that}.componentRoot",
                 "{that}.recipeMatcher",
                 "@expand:{that}.getRecipes()",
-                "{that}.reactantRecipeMembership",
-                "{that}.events.onProductCreated"
+                "{that}.reactantRecipeMembership"
             ]
         },
         onComponentDestroyed: {
@@ -169,7 +167,7 @@ gpii.nexus.coOccurrenceEngine.getRecipes = function (recipesContainer) {
     return recipes;
 };
 
-gpii.nexus.coOccurrenceEngine.componentCreated = function (componentRoot, recipeMatcher, recipes, reactantRecipeMembership, productCreatedEvent) {
+gpii.nexus.coOccurrenceEngine.componentCreated = function (componentRoot, recipeMatcher, recipes, reactantRecipeMembership) {
     var components = [];
 
     // TODO: This will only collect direct children of componentRoot, do we want all descendants?
@@ -188,16 +186,9 @@ gpii.nexus.coOccurrenceEngine.componentCreated = function (componentRoot, recipe
             if (!gpii.nexus.containsComponent(componentRoot, productPath)) {
                 var matchedReactants = recipeMatcher.matchRecipe(recipe, components);
                 if (matchedReactants) {
-                    // Extend the product options with the reactant
-                    // component paths and an event listener for onCreated
+                    // Extend product options with the reactant component paths
                     var productOptions = fluid.extend({
-                        componentPaths: { },
-                        listeners: {
-                            "onCreate.fireCoOccurrenceEngineProductCreated": {
-                                "this": productCreatedEvent,
-                                method: "fire"
-                            }
-                        }
+                        componentPaths: { }
                     }, recipe.options.product.options);
                     fluid.each(matchedReactants, function (reactantComponent, reactantName) {
                         productOptions.componentPaths[reactantName] = fluid.pathForComponent(reactantComponent);

@@ -54,12 +54,22 @@ fluid.defaults("gpii.tests.nexus.coOccurrenceEngineTestEnvironment", {
                 },
                 listeners: {
                     onComponentCreated: {
-                        funcName: "gpii.tests.nexus.coOccurrenceEngine.fireComponentGradeCreated",
+                        funcName: "gpii.tests.nexus.coOccurrenceEngine.fireComponentGradeEvent",
                         args: [
                             "{arguments}.0",
                             {
                                 "gpii.test.nexus.recipeX.product": "{coOccurrenceEngineTestEnvironment}.events.onRecipeXProductCreated",
                                 "gpii.test.nexus.recipeY.product": "{coOccurrenceEngineTestEnvironment}.events.onRecipeYProductCreated"
+                            }
+                        ]
+                    },
+                    onComponentDestroyed: {
+                        funcName: "gpii.tests.nexus.coOccurrenceEngine.fireComponentGradeEvent",
+                        args: [
+                            "{arguments}.0",
+                            {
+                                "gpii.test.nexus.recipeX.product": "{coOccurrenceEngineTestEnvironment}.events.onRecipeXProductDestroyed",
+                                "gpii.test.nexus.recipeY.product": "{coOccurrenceEngineTestEnvironment}.events.onRecipeYProductDestroyed"
                             }
                         ]
                     }
@@ -74,6 +84,15 @@ fluid.defaults("gpii.tests.nexus.coOccurrenceEngineTestEnvironment", {
             events: {
                 eventX: "{coOccurrenceEngineTestEnvironment}.events.onRecipeXProductCreated",
                 eventY: "{coOccurrenceEngineTestEnvironment}.events.onRecipeYProductCreated"
+            },
+            args: ["{arguments}.eventX.0", "{arguments}.eventY.0"]
+        },
+        onRecipeXProductDestroyed: null,
+        onRecipeYProductDestroyed: null,
+        onRecipeXAndYProductDestroyed: {
+            events: {
+                eventX: "{coOccurrenceEngineTestEnvironment}.events.onRecipeXProductDestroyed",
+                eventY: "{coOccurrenceEngineTestEnvironment}.events.onRecipeYProductDestroyed"
             },
             args: ["{arguments}.eventX.0", "{arguments}.eventY.0"]
         }
@@ -236,7 +255,7 @@ fluid.defaults("gpii.tests.nexus.coOccurrenceEngineReactantInMultipleProductsTes
         tests: [
             {
                 name: "Reactant as member of multiple products",
-                expect: 4,
+                expect: 5,
                 sequence: [
                     // Check that no recipe products exist
                     {
@@ -300,8 +319,17 @@ fluid.defaults("gpii.tests.nexus.coOccurrenceEngineReactantInMultipleProductsTes
                             "Recipe Y product created",
                             "{componentRoot}.recipeYProduct"
                         ]
+                    },
+                    // Destroy reactant A and verify that the products
+                    // for recipes X and Y are both destroyed
+                    {
+                        func: "{componentRoot}.reactantA.destroy"
+                    },
+                    {
+                        event: "{coOccurrenceEngineTestEnvironment}.events.onRecipeXAndYProductDestroyed",
+                        listener: "jqUnit.assert",
+                        args: ["Products for recipes X and Y have both been destroyed"]
                     }
-                    // TODO: Destroy reactant A
                 ]
             }
         ]

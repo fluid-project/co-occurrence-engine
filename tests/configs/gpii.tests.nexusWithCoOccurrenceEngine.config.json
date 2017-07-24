@@ -30,7 +30,7 @@
                                         "target": "{that coOccurrenceEngine}.options.listeners",
                                         "record": {
                                             "onComponentCreated": {
-                                                "funcName": "gpii.tests.nexus.coOccurrenceEngine.fireComponentGradeCreated",
+                                                "funcName": "gpii.tests.nexus.coOccurrenceEngine.fireComponentGradeEvent",
                                                 "args": [
                                                     "{arguments}.0",
                                                     {

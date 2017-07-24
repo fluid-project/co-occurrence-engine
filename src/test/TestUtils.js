@@ -17,7 +17,7 @@ var fluid = require("infusion"),
 
 fluid.registerNamespace("gpii.tests.nexus.coOccurrenceEngine");
 
-gpii.tests.nexus.coOccurrenceEngine.fireComponentGradeCreated = function (component, gradeEvents) {
+gpii.tests.nexus.coOccurrenceEngine.fireComponentGradeEvent = function (component, gradeEvents) {
     fluid.each(gradeEvents, function (event, grade) {
         if (fluid.componentHasGrade(component, grade)) {
             event.fire(component);

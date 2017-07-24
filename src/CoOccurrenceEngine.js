@@ -197,7 +197,7 @@ gpii.nexus.coOccurrenceEngine.componentCreated = function (componentRoot, recipe
                     // Record matchedReactants product membership
                     fluid.each(matchedReactants, function (reactantComponent) {
                         var reactantId = reactantComponent.id;
-                        if (fluid.contains(reactantRecipeMembership, reactantId)) {
+                        if (reactantRecipeMembership.hasOwnProperty(reactantId)) {
                             reactantRecipeMembership[reactantId].push(productPath);
                         } else {
                             reactantRecipeMembership[reactantId] = [ productPath ];

@@ -23,11 +23,24 @@ require("../src/test/TestUtils.js");
 // Base testEnvironment
 
 fluid.defaults("gpii.tests.nexus.coOccurrenceEngineTestEnvironment", {
-    gradeNames: ["fluid.test.testEnvironment"],
+    gradeNames: ["fluid.test.testEnvironment", "gpii.nexus.componentRootHolder"],
     components: {
+        componentRoot: {
+            type: "gpii.nexus.componentRoot",
+            options: {
+                components: {
+                    recipes: {
+                        type: "fluid.component"
+                    }
+                }
+            }
+        },
         coOccurrenceEngine : {
             type: "gpii.nexus.coOccurrenceEngine",
             options: {
+                components: {
+                    componentRoot: "{coOccurrenceEngineTestEnvironment}.componentRoot"
+                },
                 listeners: {
                     onComponentCreated: {
                         funcName: "gpii.tests.nexus.coOccurrenceEngine.fireComponentGradeEvent",

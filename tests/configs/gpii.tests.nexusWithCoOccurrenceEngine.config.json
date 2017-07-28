@@ -12,20 +12,14 @@
                         "nexus": {
                             "type": "gpii.nexus.nexusWithCoOccurrenceEngine",
                             "options": {
+                                "gradeNames": [
+                                    "gpii.tests.nexus.nexusWithCoOccurrenceEngine",
+                                    "fluid.resolveRoot"
+                                ],
+                                "events": {
+                                    "onRecipeXProductCreated": null
+                                },
                                 "distributeOptions": [
-                                    {
-                                        "target": "{that nexusComponentRoot}.options.gradeNames",
-                                        "record": [
-                                            "gpii.tests.nexus.componentRoot",
-                                            "fluid.resolveRoot"
-                                        ]
-                                    },
-                                    {
-                                        "target": "{that coOccurrenceEngine}.options.events",
-                                        "record": {
-                                            "onRecipeXProductCreated": null
-                                        }
-                                    },
                                     {
                                         "target": "{that coOccurrenceEngine}.options.listeners",
                                         "record": {
@@ -34,7 +28,7 @@
                                                 "args": [
                                                     "{arguments}.0",
                                                     {
-                                                        "gpii.test.nexus.recipeX.product": "{coOccurrenceEngine}.events.onRecipeXProductCreated"
+                                                        "gpii.test.nexus.recipeX.product": "{gpii.tests.nexus.nexusWithCoOccurrenceEngine}.events.onRecipeXProductCreated"
                                                     }
                                                 ]
                                             }

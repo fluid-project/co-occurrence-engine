@@ -75,12 +75,26 @@ gpii.nexus.recipeMatcher.componentMatchesReactantSpec = function (component, mat
     }
 };
 
+// gpii.nexus.componentRootHolder and gpii.nexus.componentRoot are marker grades
+// used by the Co-Occurrence Engine distributeOptions rules. A Co-Occurrence
+// Engine must be deployed under an ancestor with the grade
+// gpii.nexus.componentRootHolder. And the component root must be a descendant
+// of the componentRootHolder.
+
+fluid.defaults("gpii.nexus.componentRootHolder", {
+    gradeNames: ["fluid.component"]
+});
+
+fluid.defaults("gpii.nexus.componentRoot", {
+    gradeNames: ["fluid.component"]
+});
+
 // TODO: Who names recipe products?
 //       - Configured in each recipe; or
 //       - Randomly assigned by the Co-Occurrence Engine
 
 fluid.defaults("gpii.nexus.coOccurrenceEngine", {
-    gradeNames: ["fluid.component", "fluid.resolveRoot"], // TODO: Can I get rid of resolveRoot here?
+    gradeNames: ["fluid.component"],
     members: {
         // TODO: Is "members" the best place for this map?
 
@@ -91,16 +105,7 @@ fluid.defaults("gpii.nexus.coOccurrenceEngine", {
         reactantRecipeMembership: {}
     },
     components: {
-        componentRoot: {
-            type: "fluid.component",
-            options: {
-                components: {
-                    recipes: {
-                        type: "fluid.component"
-                    }
-                }
-            }
-        },
+        componentRoot: null, // To be provided by integrators
         recipesContainer: "{gpii.nexus.coOccurrenceEngine}.componentRoot.recipes",
         recipeMatcher: {
             type: "gpii.nexus.recipeMatcher"
@@ -137,18 +142,11 @@ fluid.defaults("gpii.nexus.coOccurrenceEngine", {
     },
     distributeOptions: [
         {
-            target: "{componentRoot fluid.component}.options.listeners",
+            target: "{gpii.nexus.componentRootHolder gpii.nexus.componentRoot fluid.component}.options.listeners",
             record: {
-                "onCreate.fireNexusComponentCreated":
-                    "{gpii.nexus.coOccurrenceEngine}.events.onComponentCreated"
-            },
-            namespace: "coOccurrenceEngine"
-        },
-        {
-            // TODO: Distributing to / will result in a lot of events being fired -- any other option?
-            target: "{/ fluid.component}.options.listeners",
-            record: {
-                "afterDestroy.fireNexusComponentDestroyed":
+                "onCreate.fireCoOccurrenceEngineComponentCreated":
+                    "{gpii.nexus.coOccurrenceEngine}.events.onComponentCreated",
+                "afterDestroy.fireCoOccurrenceEngineComponentDestroyed":
                     "{gpii.nexus.coOccurrenceEngine}.events.onComponentDestroyed"
             },
             namespace: "coOccurrenceEngine"

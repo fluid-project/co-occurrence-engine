@@ -5,7 +5,7 @@ Licensed under the New BSD license. You may not use this file except in
 compliance with this License.
 
 You may obtain a copy of the License at
-https://raw.githubusercontent.com/GPII/co-occurrence-engine/master/LICENSE.txt
+https://raw.githubusercontent.com/fluid-project/co-occurrence-engine/master/LICENSE.txt
 */
 
 /* eslint-env node */
@@ -17,36 +17,35 @@ https://raw.githubusercontent.com/GPII/co-occurrence-engine/master/LICENSE.txt
 
 "use strict";
 
-var fluid = require("infusion"),
-    gpii = fluid.registerNamespace("gpii");
+var fluid = require("infusion");
 
 fluid.require("node-jqunit");
 
 require("../index.js");
 require("../src/test/RecipeTestGrades.js");
 
-fluid.registerNamespace("gpii.test.nexus");
+fluid.registerNamespace("fluid.test.nexus");
 
-gpii.test.nexus.changeModelAtPath = function (componentPath, modelPath, value) {
+fluid.test.nexus.changeModelAtPath = function (componentPath, modelPath, value) {
     fluid.componentForPath(componentPath).applier.change(modelPath, value);
 };
 
-gpii.test.nexus.changeEventForComponent = function (path) {
+fluid.test.nexus.changeEventForComponent = function (path) {
     return fluid.componentForPath(path).applier.modelChanged;
 };
 
 // Tests
 
-fluid.defaults("gpii.tests.nexus.recipeProductTestTree", {
+fluid.defaults("fluid.tests.nexus.recipeProductTestTree", {
     gradeNames: ["fluid.test.testEnvironment"],
     components: {
         recipeProductTester: {
-            type: "gpii.tests.nexus.recipeProductTester"
+            type: "fluid.tests.nexus.recipeProductTester"
         }
     }
 });
 
-fluid.defaults("gpii.tests.nexus.recipeProductTester", {
+fluid.defaults("fluid.tests.nexus.recipeProductTester", {
     gradeNames: ["fluid.test.testCaseHolder"],
     modules: [ {
         name: "Nexus Recipe Product tests",
@@ -70,7 +69,7 @@ fluid.defaults("gpii.tests.nexus.recipeProductTester", {
                         args: [
                             "nexusRecipeProductTests.componentA1",
                             {
-                                type: "gpii.test.nexus.reactantA"
+                                type: "fluid.test.nexus.reactantA"
                             }
                         ]
                     },
@@ -79,7 +78,7 @@ fluid.defaults("gpii.tests.nexus.recipeProductTester", {
                         args: [
                             "nexusRecipeProductTests.componentA2",
                             {
-                                type: "gpii.test.nexus.reactantA"
+                                type: "fluid.test.nexus.reactantA"
                             }
                         ]
                     },
@@ -88,7 +87,7 @@ fluid.defaults("gpii.tests.nexus.recipeProductTester", {
                         args: [
                             "nexusRecipeProductTests.componentB1",
                             {
-                                type: "gpii.test.nexus.reactantB"
+                                type: "fluid.test.nexus.reactantB"
                             }
                         ]
                     },
@@ -97,7 +96,7 @@ fluid.defaults("gpii.tests.nexus.recipeProductTester", {
                         args: [
                             "nexusRecipeProductTests.componentB2",
                             {
-                                type: "gpii.test.nexus.reactantB"
+                                type: "fluid.test.nexus.reactantB"
                             }
                         ]
                     },
@@ -107,7 +106,7 @@ fluid.defaults("gpii.tests.nexus.recipeProductTester", {
                         args: [
                             "nexusRecipeProductTests.recipeX1",
                             {
-                                type: "gpii.test.nexus.recipeX.product",
+                                type: "fluid.test.nexus.recipeX.product",
                                 componentPaths: {
                                     componentA: "nexusRecipeProductTests.componentA1",
                                     componentB: "nexusRecipeProductTests.componentB1"
@@ -119,7 +118,7 @@ fluid.defaults("gpii.tests.nexus.recipeProductTester", {
                         args: [
                             "nexusRecipeProductTests.recipeX2",
                             {
-                                type: "gpii.test.nexus.recipeX.product",
+                                type: "fluid.test.nexus.recipeX.product",
                                 componentPaths: {
                                     componentA: "nexusRecipeProductTests.componentA2",
                                     componentB: "nexusRecipeProductTests.componentB2"
@@ -129,11 +128,11 @@ fluid.defaults("gpii.tests.nexus.recipeProductTester", {
                     },
                     // Exercise the model relay rules and verify
                     {
-                        func: "gpii.test.nexus.changeModelAtPath",
+                        func: "fluid.test.nexus.changeModelAtPath",
                         args: ["nexusRecipeProductTests.componentA1", "valueA", 42]
                     },
                     {
-                        changeEvent: "@expand:gpii.test.nexus.changeEventForComponent(nexusRecipeProductTests.componentB1)",
+                        changeEvent: "@expand:fluid.test.nexus.changeEventForComponent(nexusRecipeProductTests.componentB1)",
                         path: "valueB",
                         listener: "jqUnit.assertEquals",
                         args: [
@@ -143,11 +142,11 @@ fluid.defaults("gpii.tests.nexus.recipeProductTester", {
                         ]
                     },
                     {
-                        func: "gpii.test.nexus.changeModelAtPath",
+                        func: "fluid.test.nexus.changeModelAtPath",
                         args: ["nexusRecipeProductTests.componentA2", "valueA", 420]
                     },
                     {
-                        changeEvent: "@expand:gpii.test.nexus.changeEventForComponent(nexusRecipeProductTests.componentB2)",
+                        changeEvent: "@expand:fluid.test.nexus.changeEventForComponent(nexusRecipeProductTests.componentB2)",
                         path: "valueB",
                         listener: "jqUnit.assertEquals",
                         args: [
@@ -162,4 +161,4 @@ fluid.defaults("gpii.tests.nexus.recipeProductTester", {
     } ]
 });
 
-fluid.test.runTests([ "gpii.tests.nexus.recipeProductTestTree" ]);
+fluid.test.runTests([ "fluid.tests.nexus.recipeProductTestTree" ]);

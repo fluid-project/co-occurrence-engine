@@ -1,5 +1,5 @@
 {
-    "type": "gpii.tests.nexus.config",
+    "type": "fluid.tests.nexus.config",
     "options": {
         "serverPort": 8082,
         "components": {
@@ -10,10 +10,10 @@
                     "port": "{kettle.config}.options.serverPort",
                     "components": {
                         "nexus": {
-                            "type": "gpii.nexus.nexusWithCoOccurrenceEngine",
+                            "type": "fluid.nexus.nexusWithCoOccurrenceEngine",
                             "options": {
                                 "gradeNames": [
-                                    "gpii.tests.nexus.nexusWithCoOccurrenceEngine",
+                                    "fluid.tests.nexus.nexusWithCoOccurrenceEngine",
                                     "fluid.resolveRoot"
                                 ],
                                 "events": {
@@ -24,11 +24,11 @@
                                         "target": "{that coOccurrenceEngine}.options.listeners",
                                         "record": {
                                             "onComponentCreated": {
-                                                "funcName": "gpii.tests.nexus.coOccurrenceEngine.fireComponentGradeEvent",
+                                                "funcName": "fluid.tests.nexus.coOccurrenceEngine.fireComponentGradeEvent",
                                                 "args": [
                                                     "{arguments}.0",
                                                     {
-                                                        "gpii.test.nexus.recipeX.product": "{gpii.tests.nexus.nexusWithCoOccurrenceEngine}.events.onRecipeXProductCreated"
+                                                        "fluid.test.nexus.recipeX.product": "{fluid.tests.nexus.nexusWithCoOccurrenceEngine}.events.onRecipeXProductCreated"
                                                     }
                                                 ]
                                             }

@@ -1,5 +1,5 @@
 {
-    "type": "gpii.nexusWithCoOccurrenceEngine.config",
+    "type": "fluid.nexusWithCoOccurrenceEngine.config",
     "options": {
         "serverPort": 9081,
         "components": {
@@ -10,7 +10,7 @@
                     "port": "{kettle.config}.options.serverPort",
                     "components": {
                         "nexus": {
-                            "type": "gpii.nexus.nexusWithCoOccurrenceEngine"
+                            "type": "fluid.nexus.nexusWithCoOccurrenceEngine"
                         }
                     }
                 }

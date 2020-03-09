@@ -5,7 +5,7 @@ Licensed under the New BSD license. You may not use this file except in
 compliance with this License.
 
 You may obtain a copy of the License at
-https://raw.githubusercontent.com/GPII/co-occurrence-engine/master/LICENSE.txt
+https://raw.githubusercontent.com/fluid-project/co-occurrence-engine/master/LICENSE.txt
 */
 
 /* eslint-env node */
@@ -14,22 +14,22 @@ https://raw.githubusercontent.com/GPII/co-occurrence-engine/master/LICENSE.txt
 
 var fluid = require("infusion");
 
-fluid.defaults("gpii.test.nexus.reactantA", {
+fluid.defaults("fluid.test.nexus.reactantA", {
     gradeNames: ["fluid.modelComponent"],
     model: {
         valueA: 10
     }
 });
 
-fluid.defaults("gpii.test.nexus.reactantB", {
+fluid.defaults("fluid.test.nexus.reactantB", {
     gradeNames: ["fluid.modelComponent"],
     model: {
         valueB: 20
     }
 });
 
-fluid.defaults("gpii.test.nexus.recipeX.product", {
-    gradeNames: ["gpii.nexus.recipeProduct"],
+fluid.defaults("fluid.test.nexus.recipeX.product", {
+    gradeNames: ["fluid.nexus.recipeProduct"],
     componentPaths: {
         componentA: null,
         componentB: null
@@ -53,32 +53,32 @@ fluid.defaults("gpii.test.nexus.recipeX.product", {
     ]
 });
 
-fluid.defaults("gpii.test.nexus.recipeX", {
-    gradeNames: ["gpii.nexus.recipe"],
+fluid.defaults("fluid.test.nexus.recipeX", {
+    gradeNames: ["fluid.nexus.recipe"],
     reactants: {
         componentA: {
             match: {
                 type: "gradeMatcher",
-                gradeName: "gpii.test.nexus.reactantA"
+                gradeName: "fluid.test.nexus.reactantA"
             }
         },
         componentB: {
             match: {
                 type: "gradeMatcher",
-                gradeName: "gpii.test.nexus.reactantB"
+                gradeName: "fluid.test.nexus.reactantB"
             }
         }
     },
     product: {
         path: "recipeXProduct",
         options: {
-            type: "gpii.test.nexus.recipeX.product"
+            type: "fluid.test.nexus.recipeX.product"
         }
     }
 });
 
-fluid.defaults("gpii.test.nexus.recipeY.product", {
-    gradeNames: ["gpii.nexus.recipeProduct"],
+fluid.defaults("fluid.test.nexus.recipeY.product", {
+    gradeNames: ["fluid.nexus.recipeProduct"],
     componentPaths: {
         componentA: null
     },
@@ -87,20 +87,20 @@ fluid.defaults("gpii.test.nexus.recipeY.product", {
     }
 });
 
-fluid.defaults("gpii.test.nexus.recipeY", {
-    gradeNames: ["gpii.nexus.recipe"],
+fluid.defaults("fluid.test.nexus.recipeY", {
+    gradeNames: ["fluid.nexus.recipe"],
     reactants: {
         componentA: {
             match: {
                 type: "gradeMatcher",
-                gradeName: "gpii.test.nexus.reactantA"
+                gradeName: "fluid.test.nexus.reactantA"
             }
         }
     },
     product: {
         path: "recipeYProduct",
         options: {
-            type: "gpii.test.nexus.recipeY.product"
+            type: "fluid.test.nexus.recipeY.product"
         }
     }
 });

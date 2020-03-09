@@ -1,14 +1,17 @@
 {
-    "name": "gpii-co-occurrence-engine",
+    "name": "co-occurrence-engine",
     "version": "0.1.0",
-    "author": "GPII",
+    "author": "fluid-project",
     "license": "BSD-3-Clause",
-    "repository": "git@github.com:GPII/co-occurrence-engine.git",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/fluid-project/co-occurrence-engine.git"
+    },
     "scripts": {
         "test": "node tests/all-tests.js"
     },
     "dependencies": {
-        "gpii-nexus": "simonbates/nexus#GPII-2488",
+        "infusion-nexus": "fluid-project/infusion-nexus#0.2.0",
         "infusion": "2.0.0",
         "kettle": "1.1.1"
     },

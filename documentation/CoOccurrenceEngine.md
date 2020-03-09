@@ -39,7 +39,7 @@ An example reactant entry:
     phSensor: {
         match: {
             type: "gradeMatcher",
-            gradeName: "gpii.nexus.atlasScientificDriver.phSensor"
+            gradeName: "fluid.nexus.atlasScientificDriver.phSensor"
         }
     }
 
@@ -57,7 +57,7 @@ An example product section:
     product: {
         path: "sendPhSensor",
         options: {
-            type: "gpii.nexus.scienceLab.sendPhSensor"
+            type: "fluid.nexus.scienceLab.sendPhSensor"
         }
     }
 
@@ -76,33 +76,33 @@ Sample Recipe and Product grades
 Recipe:
 
     {
-        gradeNames: [ "gpii.nexus.recipe" ],
+        gradeNames: [ "fluid.nexus.recipe" ],
         reactants: {
             phSensor: {
                 match: {
                     type: "gradeMatcher",
-                    gradeName: "gpii.nexus.atlasScientificDriver.phSensor"
+                    gradeName: "fluid.nexus.atlasScientificDriver.phSensor"
                 }
             },
             collector: {
                 match: {
                     type: "gradeMatcher",
-                    gradeName: "gpii.nexus.scienceLab.collector"
+                    gradeName: "fluid.nexus.scienceLab.collector"
                 }
             }
         },
         product: {
             path: "sendPhSensor",
             options: {
-                type: "gpii.nexus.scienceLab.sendPhSensor"
+                type: "fluid.nexus.scienceLab.sendPhSensor"
             }
         }
     }
 
-Grade defaults for the "gpii.nexus.scienceLab.sendPhSensor" product:
+Grade defaults for the "fluid.nexus.scienceLab.sendPhSensor" product:
 
     {
-        gradeNames: [ "gpii.nexus.recipeProduct" ],
+        gradeNames: [ "fluid.nexus.recipeProduct" ],
         componentPaths: {
             phSensor: null,
             collector: null

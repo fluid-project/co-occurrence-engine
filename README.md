@@ -12,7 +12,7 @@ in Co-Occurrence Engine "recipes".
 Nexus with Co-Occurrence Engine
 -------------------------------
 
-This repository includes a grade, `gpii.nexus.nexusWithCoOccurrenceEngine`, and
+This repository includes a grade, `fluid.nexus.nexusWithCoOccurrenceEngine`, and
 runner script, `nexusWithCoOccurrenceEngine.js`, to run a Nexus instance with a
 Co-Occurrence Engine. To start such a Nexus instance:
 

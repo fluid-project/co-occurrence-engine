@@ -17,6 +17,6 @@ var kettle = require("kettle");
 require("./index.js");
 
 kettle.config.loadConfig({
-    configName: kettle.config.getConfigName("gpii.nexusWithCoOccurrenceEngine.config"),
-    configPath: kettle.config.getConfigPath("%gpii-co-occurrence-engine/configs")
+    configName: kettle.config.getConfigName("fluid.nexusWithCoOccurrenceEngine.config"),
+    configPath: kettle.config.getConfigPath("%co-occurrence-engine/configs")
 });

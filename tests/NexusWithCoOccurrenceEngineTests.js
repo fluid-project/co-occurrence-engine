@@ -13,8 +13,7 @@ https://raw.githubusercontent.com/fluid-project/co-occurrence-engine/master/LICE
 "use strict";
 
 var fluid = require("infusion"),
-    kettle = require("kettle"),
-    gpii = fluid.registerNamespace("gpii");
+    kettle = require("kettle");
 
 require("../index.js");
 // TODO: Is using NexusTestUtils.js reasonable?
@@ -24,11 +23,11 @@ require("../src/test/TestUtils.js");
 
 kettle.loadTestingSupport();
 
-fluid.registerNamespace("gpii.tests.nexus.nexusWithCoOccurrenceEngine");
+fluid.registerNamespace("fluid.tests.nexus.nexusWithCoOccurrenceEngine");
 
 // Tests
 
-gpii.tests.nexus.nexusWithCoOccurrenceEngine.testDefs = [
+fluid.tests.nexus.nexusWithCoOccurrenceEngine.testDefs = [
     {
         name: "Add Recipe, construct reactants, and verify product created",
         gradeNames: "kettle.test.testCaseHolder",
@@ -37,8 +36,8 @@ gpii.tests.nexus.nexusWithCoOccurrenceEngine.testDefs = [
         },
         expect: 6,
         config: {
-            configName: "gpii.tests.nexusWithCoOccurrenceEngine.config",
-            configPath: "%gpii-co-occurrence-engine/tests/configs"
+            configName: "fluid.tests.nexusWithCoOccurrenceEngine.config",
+            configPath: "%co-occurrence-engine/tests/configs"
         },
         components: {
             addRecipeRequest: {
@@ -84,7 +83,7 @@ gpii.tests.nexus.nexusWithCoOccurrenceEngine.testDefs = [
             // Add our recipe
             {
                 func: "{addRecipeRequest}.send",
-                args: [{ type: "gpii.test.nexus.recipeX" }]
+                args: [{ type: "fluid.test.nexus.recipeX" }]
             },
             {
                 event: "{addRecipeRequest}.events.onComplete",
@@ -95,7 +94,7 @@ gpii.tests.nexus.nexusWithCoOccurrenceEngine.testDefs = [
             // created
             {
                 func: "{constructReactantARequest}.send",
-                args: [{ type: "gpii.test.nexus.reactantA" }]
+                args: [{ type: "fluid.test.nexus.reactantA" }]
             },
             {
                 event: "{constructReactantARequest}.events.onComplete",
@@ -104,14 +103,14 @@ gpii.tests.nexus.nexusWithCoOccurrenceEngine.testDefs = [
             },
             {
                 func: "{constructReactantBRequest}.send",
-                args: [{ type: "gpii.test.nexus.reactantB" }]
+                args: [{ type: "fluid.test.nexus.reactantB" }]
             },
             {
-                event: "{gpii.tests.nexus.nexusWithCoOccurrenceEngine}.events.onRecipeXProductCreated",
+                event: "{fluid.tests.nexus.nexusWithCoOccurrenceEngine}.events.onRecipeXProductCreated",
                 listener: "jqUnit.assertValue",
                 args: [
                     "Recipe X product created",
-                    "{gpii.tests.nexus.nexusWithCoOccurrenceEngine}.nexusComponentRoot.recipeXProduct"
+                    "{fluid.tests.nexus.nexusWithCoOccurrenceEngine}.nexusComponentRoot.recipeXProduct"
                 ]
             },
             {
@@ -166,4 +165,4 @@ gpii.tests.nexus.nexusWithCoOccurrenceEngine.testDefs = [
     }
 ];
 
-kettle.test.bootstrapServer(gpii.tests.nexus.nexusWithCoOccurrenceEngine.testDefs);
+kettle.test.bootstrapServer(fluid.tests.nexus.nexusWithCoOccurrenceEngine.testDefs);

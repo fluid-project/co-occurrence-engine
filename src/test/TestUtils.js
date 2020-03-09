@@ -12,12 +12,11 @@ https://raw.githubusercontent.com/fluid-project/co-occurrence-engine/master/LICE
 
 "use strict";
 
-var fluid = require("infusion"),
-    gpii = fluid.registerNamespace("gpii");
+var fluid = require("infusion");
 
-fluid.registerNamespace("gpii.tests.nexus.coOccurrenceEngine");
+fluid.registerNamespace("fluid.tests.nexus.coOccurrenceEngine");
 
-gpii.tests.nexus.coOccurrenceEngine.fireComponentGradeEvent = function (component, gradeEvents) {
+fluid.tests.nexus.coOccurrenceEngine.fireComponentGradeEvent = function (component, gradeEvents) {
     fluid.each(gradeEvents, function (event, grade) {
         if (fluid.componentHasGrade(component, grade)) {
             event.fire(component);

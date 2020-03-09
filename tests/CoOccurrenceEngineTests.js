@@ -22,11 +22,11 @@ require("../src/test/TestUtils.js");
 
 // Base testEnvironment
 
-fluid.defaults("gpii.tests.nexus.coOccurrenceEngineTestEnvironment", {
-    gradeNames: ["fluid.test.testEnvironment", "gpii.nexus.componentRootHolder"],
+fluid.defaults("fluid.tests.nexus.coOccurrenceEngineTestEnvironment", {
+    gradeNames: ["fluid.test.testEnvironment", "fluid.nexus.componentRootHolder"],
     components: {
         componentRoot: {
-            type: "gpii.nexus.componentRoot",
+            type: "fluid.nexus.componentRoot",
             options: {
                 components: {
                     recipes: {
@@ -36,29 +36,29 @@ fluid.defaults("gpii.tests.nexus.coOccurrenceEngineTestEnvironment", {
             }
         },
         coOccurrenceEngine : {
-            type: "gpii.nexus.coOccurrenceEngine",
+            type: "fluid.nexus.coOccurrenceEngine",
             options: {
                 components: {
                     componentRoot: "{coOccurrenceEngineTestEnvironment}.componentRoot"
                 },
                 listeners: {
                     onComponentCreated: {
-                        funcName: "gpii.tests.nexus.coOccurrenceEngine.fireComponentGradeEvent",
+                        funcName: "fluid.tests.nexus.coOccurrenceEngine.fireComponentGradeEvent",
                         args: [
                             "{arguments}.0",
                             {
-                                "gpii.test.nexus.recipeX.product": "{coOccurrenceEngineTestEnvironment}.events.onRecipeXProductCreated",
-                                "gpii.test.nexus.recipeY.product": "{coOccurrenceEngineTestEnvironment}.events.onRecipeYProductCreated"
+                                "fluid.test.nexus.recipeX.product": "{coOccurrenceEngineTestEnvironment}.events.onRecipeXProductCreated",
+                                "fluid.test.nexus.recipeY.product": "{coOccurrenceEngineTestEnvironment}.events.onRecipeYProductCreated"
                             }
                         ]
                     },
                     onComponentDestroyed: {
-                        funcName: "gpii.tests.nexus.coOccurrenceEngine.fireComponentGradeEvent",
+                        funcName: "fluid.tests.nexus.coOccurrenceEngine.fireComponentGradeEvent",
                         args: [
                             "{arguments}.0",
                             {
-                                "gpii.test.nexus.recipeX.product": "{coOccurrenceEngineTestEnvironment}.events.onRecipeXProductDestroyed",
-                                "gpii.test.nexus.recipeY.product": "{coOccurrenceEngineTestEnvironment}.events.onRecipeYProductDestroyed"
+                                "fluid.test.nexus.recipeX.product": "{coOccurrenceEngineTestEnvironment}.events.onRecipeXProductDestroyed",
+                                "fluid.test.nexus.recipeY.product": "{coOccurrenceEngineTestEnvironment}.events.onRecipeYProductDestroyed"
                             }
                         ]
                     }
@@ -90,16 +90,16 @@ fluid.defaults("gpii.tests.nexus.coOccurrenceEngineTestEnvironment", {
 
 // Tests
 
-fluid.defaults("gpii.tests.nexus.coOccurrenceEngineConstructionTests", {
-    gradeNames: ["gpii.tests.nexus.coOccurrenceEngineTestEnvironment"],
+fluid.defaults("fluid.tests.nexus.coOccurrenceEngineConstructionTests", {
+    gradeNames: ["fluid.tests.nexus.coOccurrenceEngineTestEnvironment"],
     components: {
         coOccurrenceEngineConstructionTester: {
-            type: "gpii.tests.nexus.coOccurrenceEngineConstructionTester"
+            type: "fluid.tests.nexus.coOccurrenceEngineConstructionTester"
         }
     }
 });
 
-fluid.defaults("gpii.tests.nexus.coOccurrenceEngineConstructionTester", {
+fluid.defaults("fluid.tests.nexus.coOccurrenceEngineConstructionTester", {
     gradeNames: ["fluid.test.testCaseHolder"],
     modules: [ {
         name: "Nexus Co-Occurrence Engine construction tests",
@@ -115,7 +115,7 @@ fluid.defaults("gpii.tests.nexus.coOccurrenceEngineConstructionTester", {
                             "{coOccurrenceEngine}.componentRoot",
                             "recipes.recipeX",
                             {
-                                type: "gpii.test.nexus.recipeX"
+                                type: "fluid.test.nexus.recipeX"
                             }
                         ]
                     },
@@ -136,7 +136,7 @@ fluid.defaults("gpii.tests.nexus.coOccurrenceEngineConstructionTester", {
                             "{coOccurrenceEngine}.componentRoot",
                             "reactantA",
                             {
-                                type: "gpii.test.nexus.reactantA"
+                                type: "fluid.test.nexus.reactantA"
                             }
                         ]
                     },
@@ -146,7 +146,7 @@ fluid.defaults("gpii.tests.nexus.coOccurrenceEngineConstructionTester", {
                             "{coOccurrenceEngine}.componentRoot",
                             "reactantB",
                             {
-                                type: "gpii.test.nexus.reactantB"
+                                type: "fluid.test.nexus.reactantB"
                             }
                         ]
                     },
@@ -207,7 +207,7 @@ fluid.defaults("gpii.tests.nexus.coOccurrenceEngineConstructionTester", {
                             "{coOccurrenceEngine}.componentRoot",
                             "anotherReactantA",
                             {
-                                type: "gpii.test.nexus.reactantA"
+                                type: "fluid.test.nexus.reactantA"
                             }
                         ]
                     },
@@ -239,16 +239,16 @@ fluid.defaults("gpii.tests.nexus.coOccurrenceEngineConstructionTester", {
     } ]
 });
 
-fluid.defaults("gpii.tests.nexus.coOccurrenceEngineReactantInMultipleProductsTests", {
-    gradeNames: ["gpii.tests.nexus.coOccurrenceEngineTestEnvironment"],
+fluid.defaults("fluid.tests.nexus.coOccurrenceEngineReactantInMultipleProductsTests", {
+    gradeNames: ["fluid.tests.nexus.coOccurrenceEngineTestEnvironment"],
     components: {
         coOccurrenceEngineReactantInMultipleProductsTester: {
-            type: "gpii.tests.nexus.coOccurrenceEngineReactantInMultipleProductsTester"
+            type: "fluid.tests.nexus.coOccurrenceEngineReactantInMultipleProductsTester"
         }
     }
 });
 
-fluid.defaults("gpii.tests.nexus.coOccurrenceEngineReactantInMultipleProductsTester", {
+fluid.defaults("fluid.tests.nexus.coOccurrenceEngineReactantInMultipleProductsTester", {
     gradeNames: ["fluid.test.testCaseHolder"],
     modules: [ {
         name: "Nexus Co-Occurrence Engine reactant in multiple products tests",
@@ -264,7 +264,7 @@ fluid.defaults("gpii.tests.nexus.coOccurrenceEngineReactantInMultipleProductsTes
                             "{coOccurrenceEngine}.componentRoot",
                             "recipes.recipeX",
                             {
-                                type: "gpii.test.nexus.recipeX"
+                                type: "fluid.test.nexus.recipeX"
                             }
                         ]
                     },
@@ -274,7 +274,7 @@ fluid.defaults("gpii.tests.nexus.coOccurrenceEngineReactantInMultipleProductsTes
                             "{coOccurrenceEngine}.componentRoot",
                             "recipes.recipeY",
                             {
-                                type: "gpii.test.nexus.recipeY"
+                                type: "fluid.test.nexus.recipeY"
                             }
                         ]
                     },
@@ -301,7 +301,7 @@ fluid.defaults("gpii.tests.nexus.coOccurrenceEngineReactantInMultipleProductsTes
                             "{coOccurrenceEngine}.componentRoot",
                             "reactantB",
                             {
-                                type: "gpii.test.nexus.reactantB"
+                                type: "fluid.test.nexus.reactantB"
                             }
                         ]
                     },
@@ -311,7 +311,7 @@ fluid.defaults("gpii.tests.nexus.coOccurrenceEngineReactantInMultipleProductsTes
                             "{coOccurrenceEngine}.componentRoot",
                             "reactantA",
                             {
-                                type: "gpii.test.nexus.reactantA"
+                                type: "fluid.test.nexus.reactantA"
                             }
                         ]
                     },
@@ -346,16 +346,16 @@ fluid.defaults("gpii.tests.nexus.coOccurrenceEngineReactantInMultipleProductsTes
     } ]
 });
 
-fluid.defaults("gpii.tests.nexus.coOccurrenceEngineRecipeAfterReactantsTests", {
-    gradeNames: ["gpii.tests.nexus.coOccurrenceEngineTestEnvironment"],
+fluid.defaults("fluid.tests.nexus.coOccurrenceEngineRecipeAfterReactantsTests", {
+    gradeNames: ["fluid.tests.nexus.coOccurrenceEngineTestEnvironment"],
     components: {
         coOccurrenceEngineRecipeAfterReactantsTester: {
-            type: "gpii.tests.nexus.coOccurrenceEngineRecipeAfterReactantsTester"
+            type: "fluid.tests.nexus.coOccurrenceEngineRecipeAfterReactantsTester"
         }
     }
 });
 
-fluid.defaults("gpii.tests.nexus.coOccurrenceEngineRecipeAfterReactantsTester", {
+fluid.defaults("fluid.tests.nexus.coOccurrenceEngineRecipeAfterReactantsTester", {
     gradeNames: ["fluid.test.testCaseHolder"],
     modules: [ {
         name: "Nexus Co-Occurrence Engine add recipe after reactants tests",
@@ -371,7 +371,7 @@ fluid.defaults("gpii.tests.nexus.coOccurrenceEngineRecipeAfterReactantsTester", 
                             "{coOccurrenceEngine}.componentRoot",
                             "reactantA",
                             {
-                                type: "gpii.test.nexus.reactantA"
+                                type: "fluid.test.nexus.reactantA"
                             }
                         ]
                     },
@@ -381,7 +381,7 @@ fluid.defaults("gpii.tests.nexus.coOccurrenceEngineRecipeAfterReactantsTester", 
                             "{coOccurrenceEngine}.componentRoot",
                             "reactantB",
                             {
-                                type: "gpii.test.nexus.reactantB"
+                                type: "fluid.test.nexus.reactantB"
                             }
                         ]
                     },
@@ -400,7 +400,7 @@ fluid.defaults("gpii.tests.nexus.coOccurrenceEngineRecipeAfterReactantsTester", 
                             "{coOccurrenceEngine}.componentRoot",
                             "recipes.recipeX",
                             {
-                                type: "gpii.test.nexus.recipeX"
+                                type: "fluid.test.nexus.recipeX"
                             }
                         ]
                     },
@@ -419,7 +419,7 @@ fluid.defaults("gpii.tests.nexus.coOccurrenceEngineRecipeAfterReactantsTester", 
 });
 
 fluid.test.runTests([
-    "gpii.tests.nexus.coOccurrenceEngineConstructionTests",
-    "gpii.tests.nexus.coOccurrenceEngineReactantInMultipleProductsTests",
-    "gpii.tests.nexus.coOccurrenceEngineRecipeAfterReactantsTests"
+    "fluid.tests.nexus.coOccurrenceEngineConstructionTests",
+    "fluid.tests.nexus.coOccurrenceEngineReactantInMultipleProductsTests",
+    "fluid.tests.nexus.coOccurrenceEngineRecipeAfterReactantsTests"
 ]);

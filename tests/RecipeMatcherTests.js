@@ -13,19 +13,18 @@ https://raw.githubusercontent.com/fluid-project/co-occurrence-engine/master/LICE
 "use strict";
 
 var fluid = require("infusion"),
-    gpii = fluid.registerNamespace("gpii"),
     jqUnit = fluid.require("node-jqunit");
 
 require("../index.js");
 
-fluid.defaults("gpii.tests.nexus.reactantA", {
+fluid.defaults("fluid.tests.nexus.reactantA", {
     gradeNames: "fluid.modelComponent"
 });
 
 jqUnit.test("RecipeMatcher Test", function () {
     jqUnit.expect(2);
 
-    var matcher = gpii.nexus.recipeMatcher();
+    var matcher = fluid.nexus.recipeMatcher();
 
     var recipe = {
         options: {
@@ -33,7 +32,7 @@ jqUnit.test("RecipeMatcher Test", function () {
                 componentA: {
                     match: {
                         type: "gradeMatcher",
-                        gradeName: "gpii.tests.nexus.reactantA"
+                        gradeName: "fluid.tests.nexus.reactantA"
                     }
                 }
             }
@@ -45,7 +44,7 @@ jqUnit.test("RecipeMatcher Test", function () {
 
     // Recipe matches against an instance of reactantA
     var components = [
-        gpii.tests.nexus.reactantA()
+        fluid.tests.nexus.reactantA()
     ];
     jqUnit.assertEquals("Matches recipe", components[0], matcher.matchRecipe(recipe, components).componentA);
 });

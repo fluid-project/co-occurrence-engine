@@ -17,19 +17,19 @@ var fluid = require("infusion"),
 
 fluid.require("infusion-nexus");
 
-fluid.defaults("gpii.nexus.recipe", {
+fluid.defaults("fluid.nexus.recipe", {
     gradeNames: "fluid.component"
 });
 
-fluid.defaults("gpii.nexus.recipeProduct", {
+fluid.defaults("fluid.nexus.recipeProduct", {
     gradeNames: "fluid.modelComponent"
 });
 
-fluid.defaults("gpii.nexus.recipeMatcher", {
+fluid.defaults("fluid.nexus.recipeMatcher", {
     gradeNames: "fluid.component",
     invokers: {
         matchRecipe: {
-            funcName: "gpii.nexus.recipeMatcher.matchRecipe",
+            funcName: "fluid.nexus.recipeMatcher.matchRecipe",
             args: [
                 "{arguments}.0", // recipe to test
                 "{arguments}.1"  // array of components
@@ -38,12 +38,12 @@ fluid.defaults("gpii.nexus.recipeMatcher", {
     }
 });
 
-gpii.nexus.recipeMatcher.matchRecipe = function (recipe, components) {
+fluid.nexus.recipeMatcher.matchRecipe = function (recipe, components) {
     var matchedReactants = {};
     var foundAllReactants = true;
     fluid.each(recipe.options.reactants, function (reactant, reactantName) {
         var foundReactant = fluid.find(components, function (component) {
-            if (gpii.nexus.recipeMatcher.componentMatchesReactantSpec(component, reactant.match)) {
+            if (fluid.nexus.recipeMatcher.componentMatchesReactantSpec(component, reactant.match)) {
                 matchedReactants[reactantName] = component;
                 return true;
             }
@@ -69,23 +69,23 @@ gpii.nexus.recipeMatcher.matchRecipe = function (recipe, components) {
 //
 // https://github.com/fluid-project/infusion/blob/master/src/framework/core/js/FluidIoC.js#L322
 
-gpii.nexus.recipeMatcher.componentMatchesReactantSpec = function (component, matchRules) {
+fluid.nexus.recipeMatcher.componentMatchesReactantSpec = function (component, matchRules) {
     if (matchRules.type === "gradeMatcher") {
         return fluid.componentHasGrade(component, matchRules.gradeName);
     }
 };
 
-// gpii.nexus.componentRootHolder and gpii.nexus.componentRoot are marker grades
+// fluid.nexus.componentRootHolder and fluid.nexus.componentRoot are marker grades
 // used by the Co-Occurrence Engine distributeOptions rules. A Co-Occurrence
 // Engine must be deployed under an ancestor with the grade
-// gpii.nexus.componentRootHolder. And the component root must be a descendant
+// fluid.nexus.componentRootHolder. And the component root must be a descendant
 // of the componentRootHolder.
 
-fluid.defaults("gpii.nexus.componentRootHolder", {
+fluid.defaults("fluid.nexus.componentRootHolder", {
     gradeNames: ["fluid.component"]
 });
 
-fluid.defaults("gpii.nexus.componentRoot", {
+fluid.defaults("fluid.nexus.componentRoot", {
     gradeNames: ["fluid.component"]
 });
 
@@ -93,7 +93,7 @@ fluid.defaults("gpii.nexus.componentRoot", {
 //       - Configured in each recipe; or
 //       - Randomly assigned by the Co-Occurrence Engine
 
-fluid.defaults("gpii.nexus.coOccurrenceEngine", {
+fluid.defaults("fluid.nexus.coOccurrenceEngine", {
     gradeNames: ["fluid.component"],
     members: {
         // TODO: Is "members" the best place for this map?
@@ -106,14 +106,14 @@ fluid.defaults("gpii.nexus.coOccurrenceEngine", {
     },
     components: {
         componentRoot: null, // To be provided by integrators
-        recipesContainer: "{gpii.nexus.coOccurrenceEngine}.componentRoot.recipes",
+        recipesContainer: "{fluid.nexus.coOccurrenceEngine}.componentRoot.recipes",
         recipeMatcher: {
-            type: "gpii.nexus.recipeMatcher"
+            type: "fluid.nexus.recipeMatcher"
         }
     },
     invokers: {
         getRecipes: {
-            funcName: "gpii.nexus.coOccurrenceEngine.getRecipes",
+            funcName: "fluid.nexus.coOccurrenceEngine.getRecipes",
             args: ["{that}.recipesContainer"]
         }
     },
@@ -123,7 +123,7 @@ fluid.defaults("gpii.nexus.coOccurrenceEngine", {
     },
     listeners: {
         onComponentCreated: {
-            funcName: "gpii.nexus.coOccurrenceEngine.componentCreated",
+            funcName: "fluid.nexus.coOccurrenceEngine.componentCreated",
             args: [
                 "{that}.componentRoot",
                 "{that}.recipeMatcher",
@@ -132,7 +132,7 @@ fluid.defaults("gpii.nexus.coOccurrenceEngine", {
             ]
         },
         onComponentDestroyed: {
-            funcName: "gpii.nexus.coOccurrenceEngine.componentDestroyed",
+            funcName: "fluid.nexus.coOccurrenceEngine.componentDestroyed",
             args: [
                 "{that}.componentRoot",
                 "{that}.reactantRecipeMembership",
@@ -142,30 +142,30 @@ fluid.defaults("gpii.nexus.coOccurrenceEngine", {
     },
     distributeOptions: [
         {
-            target: "{gpii.nexus.componentRootHolder gpii.nexus.componentRoot fluid.component}.options.listeners",
+            target: "{fluid.nexus.componentRootHolder fluid.nexus.componentRoot fluid.component}.options.listeners",
             record: {
                 "onCreate.fireCoOccurrenceEngineComponentCreated":
-                    "{gpii.nexus.coOccurrenceEngine}.events.onComponentCreated",
+                    "{fluid.nexus.coOccurrenceEngine}.events.onComponentCreated",
                 "afterDestroy.fireCoOccurrenceEngineComponentDestroyed":
-                    "{gpii.nexus.coOccurrenceEngine}.events.onComponentDestroyed"
+                    "{fluid.nexus.coOccurrenceEngine}.events.onComponentDestroyed"
             },
             namespace: "coOccurrenceEngine"
         }
     ]
 });
 
-gpii.nexus.coOccurrenceEngine.getRecipes = function (recipesContainer) {
+fluid.nexus.coOccurrenceEngine.getRecipes = function (recipesContainer) {
     var recipes = [];
     fluid.each(recipesContainer, function (recipe) {
         if (fluid.isComponent(recipe)
-                && fluid.componentHasGrade(recipe, "gpii.nexus.recipe")) {
+                && fluid.componentHasGrade(recipe, "fluid.nexus.recipe")) {
             recipes.push(recipe);
         }
     });
     return recipes;
 };
 
-gpii.nexus.coOccurrenceEngine.componentCreated = function (componentRoot, recipeMatcher, recipes, reactantRecipeMembership) {
+fluid.nexus.coOccurrenceEngine.componentCreated = function (componentRoot, recipeMatcher, recipes, reactantRecipeMembership) {
     var components = [];
 
     // TODO: This will only collect direct children of componentRoot, do we want all descendants?
@@ -210,7 +210,7 @@ gpii.nexus.coOccurrenceEngine.componentCreated = function (componentRoot, recipe
     }
 };
 
-gpii.nexus.coOccurrenceEngine.componentDestroyed = function (componentRoot, reactantRecipeMembership, destroyedComponentId) {
+fluid.nexus.coOccurrenceEngine.componentDestroyed = function (componentRoot, reactantRecipeMembership, destroyedComponentId) {
     var parentPaths = reactantRecipeMembership[destroyedComponentId];
     fluid.each(parentPaths, function (parentPath) {
         gpii.nexus.destroyInContainer(componentRoot, parentPath);

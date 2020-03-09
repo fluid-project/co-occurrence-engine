@@ -16,11 +16,11 @@ var fluid = require("infusion");
 
 fluid.require("%infusion-nexus");
 
-fluid.defaults("gpii.nexus.nexusWithCoOccurrenceEngine", {
-    gradeNames: ["gpii.nexus", "gpii.nexus.componentRootHolder"],
+fluid.defaults("fluid.nexus.nexusWithCoOccurrenceEngine", {
+    gradeNames: ["gpii.nexus", "fluid.nexus.componentRootHolder"],
     components: {
         nexusComponentRoot: {
-            type: "gpii.nexus.componentRoot",
+            type: "fluid.nexus.componentRoot",
             options: {
                 components: {
                     recipes: {
@@ -30,7 +30,7 @@ fluid.defaults("gpii.nexus.nexusWithCoOccurrenceEngine", {
             }
         },
         coOccurrenceEngine: {
-            type: "gpii.nexus.coOccurrenceEngine",
+            type: "fluid.nexus.coOccurrenceEngine",
             options: {
                 components: {
                     componentRoot: "{nexusWithCoOccurrenceEngine}.nexusComponentRoot"

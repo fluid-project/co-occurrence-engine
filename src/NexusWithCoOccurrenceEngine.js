@@ -17,7 +17,7 @@ var fluid = require("infusion");
 fluid.require("%infusion-nexus");
 
 fluid.defaults("fluid.nexus.nexusWithCoOccurrenceEngine", {
-    gradeNames: ["gpii.nexus", "fluid.nexus.componentRootHolder"],
+    gradeNames: ["fluid.nexus", "fluid.nexus.componentRootHolder"],
     components: {
         nexusComponentRoot: {
             type: "fluid.nexus.componentRoot",

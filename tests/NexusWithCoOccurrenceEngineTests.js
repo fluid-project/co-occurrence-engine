@@ -87,7 +87,7 @@ fluid.tests.nexus.nexusWithCoOccurrenceEngine.testDefs = [
             },
             {
                 event: "{addRecipeRequest}.events.onComplete",
-                listener: "gpii.test.nexus.assertStatusCode",
+                listener: "fluid.test.nexus.assertStatusCode",
                 args: ["{addRecipeRequest}", 200]
             },
             // Construct the reactants and verify that the product is
@@ -98,7 +98,7 @@ fluid.tests.nexus.nexusWithCoOccurrenceEngine.testDefs = [
             },
             {
                 event: "{constructReactantARequest}.events.onComplete",
-                listener: "gpii.test.nexus.assertStatusCode",
+                listener: "fluid.test.nexus.assertStatusCode",
                 args: ["{constructReactantARequest}", 200]
             },
             {
@@ -115,7 +115,7 @@ fluid.tests.nexus.nexusWithCoOccurrenceEngine.testDefs = [
             },
             {
                 event: "{constructReactantBRequest}.events.onComplete",
-                listener: "gpii.test.nexus.assertStatusCode",
+                listener: "fluid.test.nexus.assertStatusCode",
                 args: ["{constructReactantBRequest}", 200]
             },
             // Change reactant A's model and verify that the product

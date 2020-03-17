@@ -12,7 +12,7 @@
     },
     "dependencies": {
         "infusion-nexus": "0.3.0-dev.20200305T224303Z.59892d3",
-        "infusion": "3.0.0-dev.20200214T151835Z.ab768289a.FLUID-6145",
+        "infusion": "3.0.0-dev.20200317T122331Z.1aa7ea8a1.FLUID-6145",
         "kettle": "1.12.0-dev.20191220T164344Z.f1fef17.FLUID-6145"
     },
     "devDependencies": {

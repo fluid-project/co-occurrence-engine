@@ -162,13 +162,11 @@ fluid.nexus.coOccurrenceEngine.getRecipes = function (recipesContainer) {
             recipes.push(recipe);
         }
     });
-    console.log("Returning " + recipes.length + " recipes");
     return recipes;
 };
 
 fluid.nexus.coOccurrenceEngine.componentCreated = function (componentRoot, recipeMatcher, recipes, reactantRecipeMembership) {
     var components = [];
-    console.log("ComponentCreated");
 
     // TODO: This will only collect direct children of componentRoot, do we want all descendants?
     // TODO: Maybe better to pass the componentRoot directly to the recipeMatcher and let it do the walking
@@ -178,7 +176,6 @@ fluid.nexus.coOccurrenceEngine.componentCreated = function (componentRoot, recip
             components.push(component);
         }
     });
-    console.log("Found " + components.length + " components in root");
 
     if (components.length > 0) {
         fluid.each(recipes, function (recipe) {
@@ -187,7 +184,6 @@ fluid.nexus.coOccurrenceEngine.componentCreated = function (componentRoot, recip
             var productPath = recipe.options.product.path;
             if (!fluid.nexus.containsComponent(componentRoot, productPath)) {
                 var matchedReactants = recipeMatcher.matchRecipe(recipe, components);
-                console.log("matchedReactants " + matchedReactants);
                 if (matchedReactants) {
                     // Extend product options with the reactant component paths
                     var productOptions = fluid.extend({

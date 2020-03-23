@@ -34,3 +34,6 @@ node_modules
 
 # Vagrant files
 /.vagrant/
+
+# package lock file
+package-lock.json

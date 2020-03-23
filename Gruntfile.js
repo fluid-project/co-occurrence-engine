@@ -35,7 +35,6 @@ module.exports = function (grunt) {
 
     grunt.loadNpmTasks("fluid-grunt-eslint");
     grunt.loadNpmTasks("grunt-jsonlint");
-    grunt.loadNpmTasks("grunt-shell");
 
     grunt.registerTask("default", ["lint"]);
     grunt.registerTask("lint", "Run eslint and jsonlint", ["eslint", "jsonlint"]);

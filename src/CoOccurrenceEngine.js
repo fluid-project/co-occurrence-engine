@@ -12,8 +12,7 @@ https://raw.githubusercontent.com/fluid-project/co-occurrence-engine/master/LICE
 
 "use strict";
 
-var fluid = require("infusion"),
-    gpii = fluid.registerNamespace("gpii");
+var fluid = require("infusion");
 
 fluid.require("infusion-nexus");
 
@@ -105,7 +104,8 @@ fluid.defaults("fluid.nexus.coOccurrenceEngine", {
         reactantRecipeMembership: {}
     },
     components: {
-        componentRoot: null, // To be provided by integrators
+        // Commented out following definition for FLUID-6467
+        // componentRoot: null, // To be provided by integrators
         recipesContainer: "{fluid.nexus.coOccurrenceEngine}.componentRoot.recipes",
         recipeMatcher: {
             type: "fluid.nexus.recipeMatcher"
@@ -170,6 +170,7 @@ fluid.nexus.coOccurrenceEngine.componentCreated = function (componentRoot, recip
 
     // TODO: This will only collect direct children of componentRoot, do we want all descendants?
     // TODO: Maybe better to pass the componentRoot directly to the recipeMatcher and let it do the walking
+    // TODO: This should use fluid.queryIoCSelector rather than a manual visitation
     fluid.each(componentRoot, function (component) {
         if (fluid.isComponent(component)) {
             components.push(component);
@@ -181,7 +182,7 @@ fluid.nexus.coOccurrenceEngine.componentCreated = function (componentRoot, recip
             // Process the recipe if we don't already have a product
             // constructed for it
             var productPath = recipe.options.product.path;
-            if (!gpii.nexus.containsComponent(componentRoot, productPath)) {
+            if (!fluid.nexus.containsComponent(componentRoot, productPath)) {
                 var matchedReactants = recipeMatcher.matchRecipe(recipe, components);
                 if (matchedReactants) {
                     // Extend product options with the reactant component paths
@@ -203,7 +204,7 @@ fluid.nexus.coOccurrenceEngine.componentCreated = function (componentRoot, recip
                     });
 
                     // Construct Product
-                    gpii.nexus.constructInContainer(componentRoot, productPath, productOptions);
+                    fluid.nexus.constructInContainer(componentRoot, productPath, productOptions);
                 }
             }
         });
@@ -213,6 +214,6 @@ fluid.nexus.coOccurrenceEngine.componentCreated = function (componentRoot, recip
 fluid.nexus.coOccurrenceEngine.componentDestroyed = function (componentRoot, reactantRecipeMembership, destroyedComponentId) {
     var parentPaths = reactantRecipeMembership[destroyedComponentId];
     fluid.each(parentPaths, function (parentPath) {
-        gpii.nexus.destroyInContainer(componentRoot, parentPath);
+        fluid.nexus.destroyInContainer(componentRoot, parentPath);
     });
 };

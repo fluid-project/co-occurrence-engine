@@ -1,0 +1,33 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+    build:
+        name: Test
+        runs-on: ${{ matrix.os }}
+        strategy:
+            matrix: 
+              os: [ubuntu-18.04, windows-latest, macos-latest]
+              node-version: [10.x, 12.x]
+        env:
+            CI: true
+        steps:
+            - run: git config --global core.autocrlf false
+            - uses: actions/checkout@v2
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v1
+              with:
+                  node-version: ${{ matrix.node-version }}
+            - name: Versions
+              run: |
+                  echo Node:
+                  node --version
+                  echo NPM:
+                  npm --version
+            - name: NPM install
+              run: npm install
+            - name: Lint
+              run: npx grunt lint
+            - name: Test
+              run: npm test
